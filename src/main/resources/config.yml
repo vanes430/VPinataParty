@@ -1,0 +1,64 @@
+# VPinataParty Configuration
+# Main Pinata settings
+pinata:
+  # The name displayed above the Pinata (supports MiniMessage format)
+  display-name: "<gradient:red:yellow><b>PINATA</b></gradient>"
+  # The entity type to be used as a Pinata (e.g., minecraft:llama, minecraft:horse)
+  type: "minecraft:llama"
+  # If true, the Pinata will not move or perform actions
+  no-ai: true
+  
+  # Health Calculation Logic:
+  # Player <= 5 -> 20 HP
+  # Player >= 50 -> 200 HP
+  # Player 6-49 -> Scales linearly (approx +4 HP per player)
+  health-scaling:
+    min-health: 20      # HP for 1-5 players
+    max-health: 200     # HP cap (50+ players)
+    min-players: 5      # Threshold to start scaling up
+    max-players: 50     # Threshold to stop scaling (cap)
+
+  # Boss Bar Settings (Top of screen health bar)
+  boss-bar:
+    enabled: true
+    # Colors: PINK, BLUE, RED, GREEN, YELLOW, PURPLE, WHITE
+    color: "RED"
+    # Overlays: PROGRESS, NOTCHED_6, NOTCHED_10, NOTCHED_12, NOTCHED_20
+    overlay: "NOTCHED_10"
+    # Radius in blocks for players to see the boss bar
+    range: 30
+
+  # Logging Settings
+  logging:
+    enabled: true
+    file-name: "vpinataparty.log"
+
+  # Health Bar Settings (Above entity name)
+  health-bar:
+    # Format: <name> is the original display-name, <current> and <max> are health values
+    format: "<name> <gray>[<health_color><current><gray>/<max>]"
+    full-symbol: "┃"
+    empty-symbol: "|"
+    symbol-amount: 10
+
+  # Invulnerability cooldown (in ticks) for the Pinata after being hit (20 ticks = 1 second)
+  # This prevents spam-clicking from multiple players.
+  tick-hit-cooldown: 10
+
+  # Time in seconds before the Pinata automatically despawns if not destroyed.
+  # Set to -1 to disable auto-despawn.
+  expiry-time: 300
+  # Rewards given to a player when they hit the Pinata
+  rewards:
+    - chance: 100.0
+      commands:
+        - "give %player_name% gold_nugget 1"
+    - chance: 10.0
+      commands:
+        - "give %player_name% diamond 1"
+
+# Named spawn locations for the /pinata summon <name> command
+# Format: "world: x, y, z"
+spawn-locations:
+  lokasi1: "world: 100,64,100"
+  center: "world: 0,100,0"

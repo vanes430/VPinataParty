@@ -1,0 +1,18 @@
+prefix: "<gradient:gold:yellow><b>VPinataParty</b></gradient> <dark_gray>» <gray>"
+no-permission: "<red>You do not have permission to do this."
+only-players: "<red>Only players can use this command!"
+reload-success: "<green>Configuration and messages reloaded!"
+invalid-args: "<red>Usage: /pinata <summon|party|reload> [args]"
+unknown-command: "<red>Unknown subcommand."
+
+# Pinata Summon Messages
+summon-success: "<green>A Pinata has appeared!"
+summon-console-usage: "<red>Console must specify coordinates: /pinata summon <x> <y> <z> <world>"
+summon-player-usage: "<red>Usage: /pinata summon [location_name]"
+location-not-found: "<red>Location '<arg>' not found in config."
+invalid-location-format: "<red>Invalid location format for '<arg>'."
+world-not-found: "<red>World '<arg>' not found."
+invalid-coords: "<red>Invalid coordinates. Use numbers."
+
+# Party Messages
+party-started: "<green>Pinata Party started! Spawning at configured locations."
