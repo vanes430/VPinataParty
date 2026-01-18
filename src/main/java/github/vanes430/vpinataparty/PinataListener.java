@@ -14,6 +14,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.EntityMountEvent;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -41,6 +44,27 @@ public class PinataListener implements Listener {
     @EventHandler
     public void onGeneralDamage(EntityDamageEvent event) {
         if (event.getEntity().getPersistentDataContainer().has(pinataKey, PersistentDataType.BYTE)) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onInteract(PlayerInteractEntityEvent event) {
+        if (event.getRightClicked().getPersistentDataContainer().has(pinataKey, PersistentDataType.BYTE)) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onInteractAt(PlayerInteractAtEntityEvent event) {
+        if (event.getRightClicked().getPersistentDataContainer().has(pinataKey, PersistentDataType.BYTE)) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onMount(EntityMountEvent event) {
+        if (event.getMount().getPersistentDataContainer().has(pinataKey, PersistentDataType.BYTE)) {
             event.setCancelled(true);
         }
     }
@@ -80,7 +104,7 @@ public class PinataListener implements Listener {
             if (newHealth <= 0) {
                 /* Pinata is destroyed! */
                 entity.getWorld().playSound(entity.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 1.0f);
-                entity.getWorld().spawnParticle(org.bukkit.Particle.EXPLOSION_LARGE, entity.getLocation(), 1);
+                entity.getWorld().spawnParticle(org.bukkit.Particle.EXPLOSION, entity.getLocation(), 1);
                 
                 giveRewards(player);
                 

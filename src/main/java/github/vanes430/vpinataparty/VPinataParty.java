@@ -23,8 +23,10 @@ public class VPinataParty extends JavaPlugin {
 
         /* Register Commands */
         PinataCommand pinataCommand = new PinataCommand(this, messageManager, pinataManager, scheduler);
-        getCommand("pinata").setExecutor(pinataCommand);
-        getCommand("pinata").setTabCompleter(pinataCommand);
+        
+        this.getLifecycleManager().registerEventHandler(io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents.COMMANDS, event -> {
+            event.registrar().register("pinata", pinataCommand);
+        });
         
         /* Register Listeners */
         getServer().getPluginManager().registerEvents(new PinataListener(this, scheduler, pinataManager), this);

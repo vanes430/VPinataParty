@@ -1,7 +1,7 @@
 name: VPinataParty
 version: '${project.version}'
 main: github.vanes430.vpinataparty.VPinataParty
-api-version: '1.20'
+api-version: '1.20.6'
 author: vanes430
 description: A simple Pinata Party plugin for Paper.
 folia-supported: true
@@ -11,11 +11,6 @@ dependencies:
     PlaceholderAPI:
       load: BEFORE
       required: false
-
-commands:
-  pinata:
-    description: VPinataParty main command
-    usage: /pinata <summon|party|reload>
 
 permissions:
   vpinataparty.admin:

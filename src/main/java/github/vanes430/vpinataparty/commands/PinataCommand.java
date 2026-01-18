@@ -4,22 +4,20 @@ import github.vanes430.vpinataparty.VPinataParty;
 import github.vanes430.vpinataparty.managers.MessageManager;
 import github.vanes430.vpinataparty.managers.PinataManager;
 import github.vanes430.vpinataparty.utils.SchedulerUtils;
+import io.papermc.paper.command.brigadier.BasicCommand;
+import io.papermc.paper.command.brigadier.CommandSourceStack;
 import org.bukkit.Location;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.Collection;
 import java.util.stream.Collectors;
 
-public class PinataCommand implements CommandExecutor, TabCompleter {
+public class PinataCommand implements BasicCommand {
 
     private final VPinataParty plugin;
     private final MessageManager messageManager;
@@ -34,15 +32,16 @@ public class PinataCommand implements CommandExecutor, TabCompleter {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public void execute(@NotNull CommandSourceStack stack, @NotNull String[] args) {
+        CommandSender sender = stack.getSender();
         if (!sender.hasPermission("vpinataparty.admin")) {
             messageManager.sendMessage(sender, "no-permission");
-            return true;
+            return;
         }
 
         if (args.length == 0) {
             messageManager.sendMessage(sender, "invalid-args");
-            return true;
+            return;
         }
 
         String subCommand = args[0].toLowerCase();
@@ -51,13 +50,13 @@ public class PinataCommand implements CommandExecutor, TabCompleter {
             plugin.reloadConfig();
             messageManager.reloadMessages();
             messageManager.sendMessage(sender, "reload-success");
-            return true;
+            return;
         }
 
         if (subCommand.equals("party")) {
             pinataManager.spawnParty();
             messageManager.sendMessage(sender, "party-started");
-            return true;
+            return;
         }
 
         if (subCommand.equals("summon")) {
@@ -70,7 +69,7 @@ public class PinataCommand implements CommandExecutor, TabCompleter {
                 } else {
                     messageManager.sendMessage(sender, "summon-console-usage");
                 }
-                return true;
+                return;
             }
 
             String locName = args[1];
@@ -78,7 +77,7 @@ public class PinataCommand implements CommandExecutor, TabCompleter {
 
             if (locStr == null) {
                 messageManager.sendMessage(sender, "location-not-found", "<arg>", locName);
-                return true;
+                return;
             }
 
             Location location = pinataManager.parseLocation(locStr);
@@ -88,15 +87,15 @@ public class PinataCommand implements CommandExecutor, TabCompleter {
             } else {
                 messageManager.sendMessage(sender, "invalid-location-format", "<arg>", locName);
             }
-            return true;
+            return;
         }
 
         messageManager.sendMessage(sender, "unknown-command");
-        return true;
     }
 
     @Override
-    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
+    public @NotNull Collection<String> suggest(@NotNull CommandSourceStack stack, @NotNull String[] args) {
+        CommandSender sender = stack.getSender();
         if (!sender.hasPermission("vpinataparty.admin")) return new ArrayList<>();
 
         if (args.length == 1) {

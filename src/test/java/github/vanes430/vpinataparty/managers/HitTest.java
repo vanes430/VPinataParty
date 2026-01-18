@@ -69,7 +69,7 @@ public class HitTest {
         Llama mockPinata = mock(Llama.class);
         when(mockPinata.getUniqueId()).thenReturn(pinataUuid);
         
-        EntityDeathEvent deathEvent = new EntityDeathEvent(mockPinata, new java.util.ArrayList<>());
+        EntityDeathEvent deathEvent = new EntityDeathEvent(mockPinata, null, new java.util.ArrayList<>());
         listener.onEntityDeath(deathEvent);
 
         assertEquals(0.0, pinataManager.getHealth(pinataUuid), "Pinata data must be cleared from memory (0.0) after death event");
